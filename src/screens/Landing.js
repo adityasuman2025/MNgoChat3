@@ -15,7 +15,21 @@ import DarkLoader from "../components/DarkLoader";
 export default function Landing({ navigation }) {
     //componentDidMount
     useEffect(() => {
+        (async () => {
+            const loggedUserId = await getDecryptedAsyncStorageValue("loggedUserId");
+            console.log("loggedUserId", loggedUserId);
+            if (loggedUserId) {
+                console.log("someone is already logged in");
 
+                //redirecting to dasboard screen
+                navigation.replace("Dashboard");
+            } else {
+                console.log("noone is logged in");
+
+                //redirecting to login screen
+                navigation.replace("Login");
+            }
+        })();
     }, []);
 
     //component rendering
