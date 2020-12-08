@@ -1,10 +1,14 @@
 //color variables
+
+export const THEME_PURPLE = "#35176d";
+export const THEME_DARK_PURPLE = "#24133f";
+
 export const DARK_PURPLE = "#22045a";
-export const LIGHT_PURPLE = "#35176d";
+export const LIGHT_PURPLE = THEME_PURPLE;
 
 export const EXTRA_DARK_GREY = "grey";
 export const DARK_GREY = "lightgrey";
-export const LIGHT_GREY = "#e2e2e2";
+export const LIGHT_GREY = "#d8d8d8";
 
 
 export const GRADIENT_PURPLE_LIGHT = LIGHT_PURPLE;

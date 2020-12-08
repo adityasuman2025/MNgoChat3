@@ -13,6 +13,7 @@ import RootStack from './src/navigation/RootStack';
 function App() {
     return (
         <TouchableWithoutFeedback onPress={() => {
+            console.log("yo")
             //to remove the keyboard from screen when anywhere instead of textInput field is pressed  
             Keyboard.dismiss();
         }}>

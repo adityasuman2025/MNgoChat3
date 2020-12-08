@@ -16,6 +16,7 @@ export default function Landing({ navigation }) {
     //componentDidMount
     useEffect(() => {
         (async () => {
+            //checking if someone is logged or not
             const loggedUserId = await getDecryptedAsyncStorageValue("loggedUserId");
             console.log("loggedUserId", loggedUserId);
             if (loggedUserId) {
