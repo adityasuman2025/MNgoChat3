@@ -6,15 +6,26 @@ import {
     LIGHT_GREY,
 } from "../constants";
 
+import LoaderDark from "./LoaderDark";
+
 export default function ButtonLight({
     customStyle,
     textStyle,
+    showLoader,
     buttonText = "Button",
     onPress,
 }) {
     return (
-        <TouchableOpacity style={[styles.container, customStyle]} onPress={onPress}>
-            <Text style={[styles.buttonText, textStyle]}>{buttonText}</Text>
+        <TouchableOpacity
+            style={[styles.container, customStyle]}
+            onPress={!showLoader ? onPress : null}
+        >
+            {
+                showLoader ?
+                    <LoaderDark />
+                    :
+                    <Text style={[styles.buttonText, textStyle]}>{buttonText}</Text>
+            }
         </TouchableOpacity>
     );
 }

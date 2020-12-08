@@ -29,9 +29,7 @@ export default function SignInUpButton({
 
 const styles = StyleSheet.create({
     signupTextCont: {
-        position: "absolute",
-        bottom: 0,
-        zIndex: -0,
+        marginTop: 50,
         flexDirection: 'row',
         justifyContent: 'center',
         marginVertical: 20,

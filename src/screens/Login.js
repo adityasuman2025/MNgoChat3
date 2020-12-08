@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {
@@ -15,17 +15,21 @@ import ButtonLight from "../components/ButtonLight";
 import SignInUpButton from "../components/SignInUpButton";
 
 export default function Login({ navigation }) {
+    const [isLoading, setIsLoading] = useState(false);
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     //function to handle when login btn is pressed
     function handleLoginPress() {
         console.log("login pressed");
+        setIsLoading(true);
     }
 
     //function to handle when signup btn is pressed
     function handleSignupPressed() {
         console.log("signup pressed");
+        navigation.navigate("Register");
     }
 
     //component rendering
@@ -60,10 +64,10 @@ export default function Login({ navigation }) {
                 />
 
                 <ButtonLight
+                    showLoader={isLoading}
                     buttonText="Login"
                     onPress={handleLoginPress}
                 />
-
             </View>
 
             <SignInUpButton
