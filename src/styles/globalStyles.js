@@ -16,7 +16,8 @@ export const globalStyles = StyleSheet.create({
 
     logoImg: {
         width: 130,
-        height: 130,
+        height: 120,
+        // resizeMode: "contain",
     },
 
     logoTitle: {

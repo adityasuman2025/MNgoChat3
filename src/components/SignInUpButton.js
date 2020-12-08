@@ -1,6 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
+import {
+    LIGHT_GREY,
+} from "../constants";
+
 export default function SignInUpButton({
     customStyle,
     textStyle,
@@ -28,20 +32,20 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         zIndex: -0,
+        flexDirection: 'row',
         justifyContent: 'center',
         marginVertical: 20,
-        flexDirection: 'row'
     },
 
     signupText: {
-        color: 'rgba(255,255,255,0.6)',
-        fontSize: 16,
         marginRight: 5,
+        fontSize: 16,
+        color: 'rgba(255,255,255,0.6)',
     },
 
     signupButton: {
-        color: '#ffffff',
         fontSize: 16,
-        fontWeight: '500'
+        fontWeight: '500',
+        color: LIGHT_GREY,
     },
 });
