@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Image, StatusBar } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {
@@ -8,9 +8,15 @@ import {
     GRADIENT_GREY_LIGHT,
     GRADIENT_GREY_DARK,
 } from "../constants";
+import { getDecryptedAsyncStorageValue } from "../utils";
+
+import DarkLoader from "../components/DarkLoader";
 
 export default function Landing({ navigation }) {
-    const [isLoading, setIsLoading] = useState(true);
+    //componentDidMount
+    useEffect(() => {
+
+    }, []);
 
     //component rendering
     return (
@@ -20,6 +26,7 @@ export default function Landing({ navigation }) {
             colors={[GRADIENT_PURPLE_LIGHT, GRADIENT_PURPLE_DARK]}
             style={styles.root}
         >
+            <StatusBar barStyle="dark-content" hidden={true} backgroundColor="#35176d" translucent={true} />
             <LinearGradient
                 start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }}
                 locations={[0, 0.5]}
@@ -48,7 +55,9 @@ export default function Landing({ navigation }) {
                 locations={[0, 0.5]}
                 colors={[GRADIENT_GREY_LIGHT, GRADIENT_GREY_DARK]}
                 style={styles.containerSmall3}
-            />
+            >
+                <DarkLoader />
+            </LinearGradient>
         </LinearGradient>
     );
 }
@@ -76,6 +85,8 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
         borderRadius: 500,
+        justifyContent: "center",
+        alignItems: "center",
     },
 
     containerSmall2: {
@@ -85,6 +96,8 @@ const styles = StyleSheet.create({
         width: 150,
         height: 150,
         borderRadius: 500,
+        justifyContent: "center",
+        alignItems: "center",
     },
 
     containerSmall3: {
@@ -94,6 +107,8 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 500,
+        justifyContent: "center",
+        alignItems: "center",
     },
 
     logoImg: {
