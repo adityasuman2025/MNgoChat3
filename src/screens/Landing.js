@@ -10,7 +10,7 @@ import {
 } from "../constants";
 import { getDecryptedAsyncStorageValue } from "../utils";
 
-import DarkLoader from "../components/DarkLoader";
+import LoaderDark from "../components/LoaderDark";
 
 export default function Landing({ navigation }) {
     //componentDidMount
@@ -71,7 +71,7 @@ export default function Landing({ navigation }) {
                 colors={[GRADIENT_GREY_LIGHT, GRADIENT_GREY_DARK]}
                 style={styles.containerSmall3}
             >
-                <DarkLoader />
+                <LoaderDark />
             </LinearGradient>
         </LinearGradient>
     );

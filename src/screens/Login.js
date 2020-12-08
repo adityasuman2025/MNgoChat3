@@ -11,7 +11,7 @@ import {
 } from "../constants";
 import { globalStyles } from '../styles/globalStyles';
 
-import LightButton from "../components/LightButton";
+import ButtonLight from "../components/ButtonLight";
 import SignInUpButton from "../components/SignInUpButton";
 
 export default function Login({ navigation }) {
@@ -59,7 +59,7 @@ export default function Login({ navigation }) {
                     onChangeText={(val) => setPassword(val)}
                 />
 
-                <LightButton
+                <ButtonLight
                     buttonText="Login"
                     onPress={handleLoginPress}
                 />

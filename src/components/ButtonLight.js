@@ -6,7 +6,7 @@ import {
     LIGHT_GREY,
 } from "../constants";
 
-export default function DarkButton({
+export default function ButtonLight({
     customStyle,
     textStyle,
     buttonText = "Button",
@@ -24,18 +24,18 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         width: "85%",
-        height: 50,
+        height: 48,
         borderRadius: 25,
         paddingHorizontal: 16,
         marginVertical: 10,
         fontSize: 16,
         color: '#f1f1f1',
-        backgroundColor: THEME_DARK_PURPLE,
+        backgroundColor: LIGHT_GREY,
     },
 
     buttonText: {
         fontSize: 16,
-        fontWeight: '600',
-        color: LIGHT_GREY,
+        fontWeight: '700',
+        color: THEME_DARK_PURPLE,
     }
 });

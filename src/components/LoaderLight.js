@@ -3,7 +3,7 @@ import { StyleSheet, View, ActivityIndicator } from 'react-native';
 
 import { DARK_GREY } from "../constants";
 
-export default function LightLoader({
+export default function LoaderLight({
     customStyle,
     loaderSize,
 }) {

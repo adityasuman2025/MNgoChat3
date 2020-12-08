@@ -3,7 +3,7 @@ import { StyleSheet, View, ActivityIndicator } from 'react-native';
 
 import { DARK_PURPLE } from "../constants";
 
-export default function DarkLoader({
+export default function LoaderDark({
     customStyle,
     loaderSize,
 }) {
