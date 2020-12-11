@@ -1,44 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import React, { useEffect } from 'react';
+import { DrawerActions } from '@react-navigation/native';
 
-export default function Dashboard({ navigation }) {
-    const [isLoading, setIsLoading] = useState(true);
+import {
+    createDrawerNavigator,
+    DrawerContentScrollView,
+    DrawerItem,
+} from '@react-navigation/drawer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-    //component rendering
+import BottomTab from '../navigation/BottomTab';
+
+const Drawer = createDrawerNavigator();
+
+function CustomDrawerContent(props) {
     return (
-        <View style={styles.container}>
-            <Text>Dashboard</Text>
-        </View>
+        <DrawerContentScrollView {...props}>
+            <DrawerItem
+                label="Home"
+            // onPress={() => props.navigation.navigate("Home")}
+            />
+
+            <DrawerItem
+                label="Social"
+            // onPress={() => props.navigation.navigate("Social")}
+            />
+
+            <DrawerItem
+                label="Sign Out"
+                labelStyle={{ color: "red" }}
+            // onPress={() => hanldeLogoutPress(props)}
+            />
+        </DrawerContentScrollView>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        marginTop: 0,
-        paddingHorizontal: 30,
-        justifyContent: "center",
-    },
+async function hanldeLogoutPress(props) {
+    try {
+        await AsyncStorage.removeItem("loggedUserEmail");
+        await AsyncStorage.removeItem("loggedUserId");
 
-    animation: {
-        width: "100%",
-        backgroundColor: "#f1f1f1",
-        marginBottom: 50,
-    },
+        console.log("successfully logged out");
 
-    title: {
-        fontWeight: '500',
-        fontSize: 30,
-        letterSpacing: 0.1,
-        textAlign: "center",
-    },
+        //redirecring to ladnding page
+        props.navigation.push("Landing");
+    }
+    catch (exception) {
+        console.log("failed to log out");
+    }
+}
 
-    divider: {
-        paddingVertical: 8,
-    },
+function Dashboard({ navigation }) {
+    useEffect(
+        () =>
+            navigation.addListener('beforeRemove', (e) => {
+                // Prevent default behavior of leaving the screen
+                e.preventDefault();
+                console.log("back pressed");
+            }),
+        []
+    );
 
-    loader: {
-        marginTop: 10,
-    },
-});
+    return (
+        <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
+            <Drawer.Screen name="Home" component={BottomTab} />
+        </Drawer.Navigator>
+    )
+}
+
+export default Dashboard;
