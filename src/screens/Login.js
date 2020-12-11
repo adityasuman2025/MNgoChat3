@@ -63,7 +63,10 @@ function Login({
                         const loggedUserEmail = await makeEncryptedAsyncStorage("loggedUserEmail", data.email);
                         const loggedUserToken = await makeEncryptedAsyncStorage("loggedUserToken", token);
                         if (loggedUserId && loggedUserName && loggedUserUsername && loggedUserEmail && loggedUserToken) {
-                            displaySnackBar("success", msg);
+                            // displaySnackBar("success", msg);
+                            //redirecting to dashboard screen
+                            navigation.replace("Dashboard");
+                            return;
                         } else {
                             displaySnackBar("error", "Seomthing went wrong");
                         }
@@ -92,6 +95,7 @@ function Login({
     function handleSignupPressed() {
         //redirecting to register screen
         navigation.navigate("Register");
+        return;
     }
 
     //function to display snackbar

@@ -28,11 +28,13 @@ export default function Landing({ navigation }) {
 
                 //redirecting to dasboard screen
                 navigation.replace("Dashboard");
+                return;
             } else {
                 console.log("noone is logged in");
 
                 //redirecting to login screen
                 navigation.replace("Login");
+                return;
             }
         })();
     }, []);
