@@ -14,6 +14,7 @@ import SnackBar from "../components/SnackBar";
 import PurpleGradientContainer from "../components/PurpleGradientContainer";
 
 import {
+    resetLoginInfoAction,
     loginUserAction
 } from "../actions/index";
 
@@ -37,6 +38,17 @@ function Login({
     const [snackBarText, setSnackBarText] = useState("");
     const [snackBarType, setSnackBarType] = useState("");
 
+    //componentDidMount && componentWillUnmount
+    useEffect(() => {
+        //resetting loginInfo reducer on mount and unmount
+        dispatch && dispatch(resetLoginInfoAction());
+
+        return () => {
+            dispatch && dispatch(resetLoginInfoAction());
+        }
+    }, []);
+
+    //when any change in reducer state variable "loginInfo" takes place
     useEffect(() => {
         if (Object.keys(loginInfo).length > 0) {
             const { statusCode, msg, data } = loginInfo;

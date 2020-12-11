@@ -10,7 +10,6 @@ export async function verifyUser(username, password) {
             password,
         });
 
-        // getting resp from sent rqst
         if (response) {
             const resp = response.data;
             return resp;
@@ -22,7 +21,7 @@ export async function verifyUser(username, password) {
     return { msg: "Something went wrong", statusCode: 500 };
 };
 
-export async function registerUser(username, name, email, password, confPassword, passcode, confPasscode) {
+export async function registerUser(username, name, email, password, passcode) {
     try {
         const apiEndPoint = AUTH_API_URL_ADDRESS + "register_user.php";
         const response = await axios.post(apiEndPoint, {
@@ -30,12 +29,9 @@ export async function registerUser(username, name, email, password, confPassword
             name,
             email,
             password,
-            confPassword,
             passcode,
-            confPasscode,
         });
 
-        // getting resp from sent rqst
         if (response) {
             const resp = response.data;
             return resp;

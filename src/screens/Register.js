@@ -14,8 +14,14 @@ import PurpleGradientContainer from "../components/PurpleGradientContainer";
 import SnackBar from "../components/SnackBar";
 
 import {
+    resetRegisterInfoAction,
     registerUserAction
 } from "../actions/index";
+import {
+    validateUsername,
+    validateName,
+    validateEmail,
+} from "../utils";
 
 import {
     DARK_PURPLE,
@@ -42,6 +48,17 @@ function Register({
     const [snackBarText, setSnackBarText] = useState("");
     const [snackBarType, setSnackBarType] = useState("");
 
+    //componentDidMount && componentWillUnmount
+    useEffect(() => {
+        //resetting registerInfo reducer on mount and unmount
+        dispatch && dispatch(resetRegisterInfoAction());
+
+        return () => {
+            dispatch && dispatch(resetRegisterInfoAction());
+        }
+    }, []);
+
+    //when any change in reducer state variable "registerInfo" takes place
     useEffect(() => {
         if (Object.keys(registerInfo).length > 0) {
             const { statusCode, msg, data } = registerInfo;
@@ -56,19 +73,35 @@ function Register({
 
     //function to handle when login btn is pressed
     function handleRegisterPress() {
-        console.log("register pressed");
-
         if (username !== "" && name !== "" && email !== "" && password !== "" && confPassword !== "" && passcode !== "" && confPasscode !== "") {
-            if (password === confPassword) {
-                if (passcode === confPasscode) {
-                    setIsLoading(true);
-                    dispatch && dispatch(registerUserAction(username, name, email, password, confPassword, passcode, confPasscode));
-                } else {
-                    displaySnackBar("error", "Passcode do not match");
-                }
-            } else {
-                displaySnackBar("error", "Password do not match");
+            if (!validateUsername(username)) {
+                displaySnackBar("error", "Username cannot contain symbol and spaces");
+                return;
             }
+            if (!validateName(name)) {
+                displaySnackBar("error", "Name cannot contain symbol and spaces");
+                return;
+            }
+            if (!validateEmail(email)) {
+                displaySnackBar("error", "Invalid Email id format");
+                return;
+            }
+            if (password !== confPassword) {
+                displaySnackBar("error", "Password do not match");
+                return;
+            }
+            if (passcode.length !== 4) {
+                displaySnackBar("error", "Pass code must be 4 digits long");
+                return;
+            }
+            if (passcode !== confPasscode) {
+                displaySnackBar("error", "Passcode do not match");
+                return;
+            }
+
+            //all is good
+            setIsLoading(true);
+            dispatch && dispatch(registerUserAction(username, name, email, password, passcode));
         } else {
             displaySnackBar("error", "Please fill all the input fields");
         }

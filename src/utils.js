@@ -30,3 +30,25 @@ export async function makeEncryptedCookie(key, value) {
         return false;
     }
 };
+
+//function to validate name, contact no and email
+export function validateUsername(username) {
+    var re = /^[a-zA-Z0-9_]*$/;
+    return re.test(username);
+};
+
+//function to validate name, contact no and email
+export function validateName(name) {
+    var re = /^[a-zA-Z0-9 ]*$/;
+    return re.test(name);
+};
+
+export function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+};
+
+export function validateNumber(number) {
+    var re = /^[0-9]*$/;
+    return re.test(number);
+};
