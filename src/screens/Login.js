@@ -7,7 +7,6 @@ import {
     Image,
     TextInput
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 
 import ButtonLight from "../components/ButtonLight";
 import SignInUpButton from "../components/SignInUpButton";

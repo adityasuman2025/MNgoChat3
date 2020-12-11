@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Image, StatusBar } from 'react-native';
+import {
+    StyleSheet,
+    Image,
+    StatusBar
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { getDecryptedAsyncStorageValue } from "../utils";

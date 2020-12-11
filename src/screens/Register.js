@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TextInput } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {
+    StyleSheet,
+    Text,
+    View,
+    ScrollView,
+    Image,
+    TextInput
+} from 'react-native';
+
+import ButtonLight from "../components/ButtonLight";
+import PurpleGradientContainer from "../components/PurpleGradientContainer";
 
 import {
-    GRADIENT_PURPLE_LIGHT,
-    GRADIENT_PURPLE_DARK,
     DARK_PURPLE,
     DARK_GREY,
     PROJECT_NAME,
 } from "../constants";
 import { globalStyles } from '../styles/globalStyles';
-
-import ButtonLight from "../components/ButtonLight";
-import SignInUpButton from "../components/SignInUpButton";
 
 export default function Register({ navigation }) {
     const [username, setUsername] = useState("");
@@ -35,12 +39,7 @@ export default function Register({ navigation }) {
 
     //component rendering
     return (
-        <LinearGradient
-            start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }}
-            locations={[0, 0.5]}
-            colors={[GRADIENT_PURPLE_LIGHT, GRADIENT_PURPLE_DARK]}
-            style={globalStyles.root}
-        >
+        <PurpleGradientContainer>
             <ScrollView style={styles.scroll}>
                 <View style={styles.container}>
                     <Image source={require("../images/logo.png")} style={globalStyles.logoImg} />
@@ -120,23 +119,22 @@ export default function Register({ navigation }) {
                         onPress={handleLoginPress}
                     />
                 </View>
-
             </ScrollView>
-        </LinearGradient>
+        </PurpleGradientContainer>
     );
 }
 
 const styles = StyleSheet.create({
+    scroll: {
+        flex: 1,
+        width: "100%",
+    },
+
     container: {
         flex: 1,
         width: "100%",
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10,
+        marginVertical: 30,
     },
-
-    scroll: {
-        flex: 1,
-        width: "100%",
-    }
 });
