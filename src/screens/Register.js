@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import {
     StyleSheet,
     Text,
@@ -10,6 +11,11 @@ import {
 
 import ButtonLight from "../components/ButtonLight";
 import PurpleGradientContainer from "../components/PurpleGradientContainer";
+import SnackBar from "../components/SnackBar";
+
+import {
+    registerUserAction
+} from "../actions/index";
 
 import {
     DARK_PURPLE,
@@ -18,7 +24,11 @@ import {
 } from "../constants";
 import { globalStyles } from '../styles/globalStyles';
 
-export default function Register({ navigation }) {
+function Register({
+    registerInfo,
+    navigation,
+    dispatch,
+}) {
     const [username, setUsername] = useState("");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -27,100 +37,153 @@ export default function Register({ navigation }) {
     const [passcode, setPasscode] = useState("");
     const [confPasscode, setConfPasscode] = useState("");
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [snackBarVisible, setSnackBarVisible] = useState(false);
+    const [snackBarText, setSnackBarText] = useState("");
+    const [snackBarType, setSnackBarType] = useState("");
+
+    useEffect(() => {
+        if (Object.keys(registerInfo).length > 0) {
+            const { statusCode, msg, data } = registerInfo;
+            if (statusCode === 200) {
+                displaySnackBar("success", msg);
+            } else {
+                displaySnackBar("error", msg);
+            }
+            setIsLoading(false);
+        }
+    }, [registerInfo]);
+
     //function to handle when login btn is pressed
-    function handleLoginPress() {
-        console.log("login pressed");
+    function handleRegisterPress() {
+        console.log("register pressed");
+
+        if (username !== "" && name !== "" && email !== "" && password !== "" && confPassword !== "" && passcode !== "" && confPasscode !== "") {
+            if (password === confPassword) {
+                if (passcode === confPasscode) {
+                    setIsLoading(true);
+                    dispatch && dispatch(registerUserAction(username, name, email, password, confPassword, passcode, confPasscode));
+                } else {
+                    displaySnackBar("error", "Passcode do not match");
+                }
+            } else {
+                displaySnackBar("error", "Password do not match");
+            }
+        } else {
+            displaySnackBar("error", "Please fill all the input fields");
+        }
     }
 
-    //function to handle when signup btn is pressed
-    function handleSignupPressed() {
-        console.log("signup pressed");
+    //function to display snackbar
+    function displaySnackBar(type, text) {
+        setSnackBarType(type);
+        setSnackBarText(text);
+        setSnackBarVisible(true);
+    }
+
+    //function to hide snackbar
+    function hideSnackBar() {
+        setSnackBarVisible(false);
     }
 
     //component rendering
     return (
-        <PurpleGradientContainer>
-            <ScrollView style={styles.scroll}>
-                <View style={styles.container}>
-                    <Image source={require("../images/logo.png")} style={globalStyles.logoImg} />
-                    <Text style={globalStyles.logoTitle}>{PROJECT_NAME}</Text>
+        <>
+            <PurpleGradientContainer>
+                <ScrollView style={styles.scroll}>
+                    <View style={styles.container}>
+                        <Image source={require("../images/logo.png")} style={globalStyles.logoImg} />
+                        <Text style={globalStyles.logoTitle}>{PROJECT_NAME}</Text>
 
-                    <TextInput style={globalStyles.formInputField}
-                        placeholder="Username"
-                        placeholderTextColor={DARK_GREY}
-                        selectionColor={DARK_PURPLE}
-                        keyboardType="visible-password"
-                        autoFocus
-                        value={username}
-                        onChangeText={(val) => setUsername(val)}
-                    />
+                        <TextInput style={globalStyles.formInputField}
+                            placeholder="Username"
+                            placeholderTextColor={DARK_GREY}
+                            selectionColor={DARK_PURPLE}
+                            keyboardType="visible-password"
+                            autoFocus
+                            value={username}
+                            onChangeText={(val) => setUsername(val)}
+                        />
 
-                    <TextInput style={globalStyles.formInputField}
-                        placeholder="Name"
-                        placeholderTextColor={DARK_GREY}
-                        selectionColor={DARK_PURPLE}
-                        keyboardType="name-phone-pad"
-                        autoCapitalize='words'
-                        value={name}
-                        onChangeText={(val) => setName(val)}
-                    />
+                        <TextInput style={globalStyles.formInputField}
+                            placeholder="Name"
+                            placeholderTextColor={DARK_GREY}
+                            selectionColor={DARK_PURPLE}
+                            keyboardType="name-phone-pad"
+                            autoCapitalize='words'
+                            value={name}
+                            onChangeText={(val) => setName(val)}
+                        />
 
-                    <TextInput style={globalStyles.formInputField}
-                        placeholder="Email"
-                        placeholderTextColor={DARK_GREY}
-                        selectionColor={DARK_PURPLE}
-                        keyboardType="email-address"
-                        value={email}
-                        onChangeText={(val) => setEmail(val)}
-                    />
+                        <TextInput style={globalStyles.formInputField}
+                            placeholder="Email"
+                            placeholderTextColor={DARK_GREY}
+                            selectionColor={DARK_PURPLE}
+                            keyboardType="email-address"
+                            value={email}
+                            onChangeText={(val) => setEmail(val)}
+                        />
 
-                    <TextInput style={globalStyles.formInputField}
-                        placeholder="Password"
-                        placeholderTextColor={DARK_GREY}
-                        selectionColor={DARK_PURPLE}
-                        secureTextEntry={true}
-                        value={password}
-                        onChangeText={(val) => setPassword(val)}
-                    />
+                        <TextInput style={globalStyles.formInputField}
+                            placeholder="Password"
+                            placeholderTextColor={DARK_GREY}
+                            selectionColor={DARK_PURPLE}
+                            secureTextEntry={true}
+                            value={password}
+                            onChangeText={(val) => setPassword(val)}
+                        />
 
-                    <TextInput style={globalStyles.formInputField}
-                        placeholder="Confirm Password"
-                        placeholderTextColor={DARK_GREY}
-                        selectionColor={DARK_PURPLE}
-                        secureTextEntry={true}
-                        value={confPassword}
-                        onChangeText={(val) => setConfPassword(val)}
-                    />
+                        <TextInput style={globalStyles.formInputField}
+                            placeholder="Confirm Password"
+                            placeholderTextColor={DARK_GREY}
+                            selectionColor={DARK_PURPLE}
+                            secureTextEntry={true}
+                            value={confPassword}
+                            onChangeText={(val) => setConfPassword(val)}
+                        />
 
-                    <TextInput style={globalStyles.formInputField}
-                        placeholder="Pass Code"
-                        placeholderTextColor={DARK_GREY}
-                        selectionColor={DARK_PURPLE}
-                        secureTextEntry={true}
-                        keyboardType="number-pad"
-                        maxLength={4}
-                        value={passcode}
-                        onChangeText={(val) => setPasscode(val)}
-                    />
+                        <TextInput style={globalStyles.formInputField}
+                            placeholder="Pass Code"
+                            placeholderTextColor={DARK_GREY}
+                            selectionColor={DARK_PURPLE}
+                            secureTextEntry={true}
+                            keyboardType="number-pad"
+                            maxLength={4}
+                            value={passcode}
+                            onChangeText={(val) => setPasscode(val)}
+                        />
 
-                    <TextInput style={globalStyles.formInputField}
-                        placeholder="Confirm Pass Code"
-                        placeholderTextColor={DARK_GREY}
-                        selectionColor={DARK_PURPLE}
-                        secureTextEntry={true}
-                        keyboardType="number-pad"
-                        maxLength={4}
-                        value={confPasscode}
-                        onChangeText={(val) => setConfPasscode(val)}
-                    />
+                        <TextInput style={globalStyles.formInputField}
+                            placeholder="Confirm Pass Code"
+                            placeholderTextColor={DARK_GREY}
+                            selectionColor={DARK_PURPLE}
+                            secureTextEntry={true}
+                            keyboardType="number-pad"
+                            maxLength={4}
+                            value={confPasscode}
+                            onChangeText={(val) => setConfPasscode(val)}
+                        />
 
-                    <ButtonLight
-                        buttonText="Register"
-                        onPress={handleLoginPress}
+                        <ButtonLight
+                            showLoader={isLoading}
+                            buttonText="Register"
+                            onPress={handleRegisterPress}
+                        />
+                    </View>
+                </ScrollView>
+            </PurpleGradientContainer>
+
+            {
+                snackBarVisible ?
+                    <SnackBar
+                        isVisible={snackBarVisible}
+                        text={snackBarText}
+                        type={snackBarType}
+                        onClose={hideSnackBar}
                     />
-                </View>
-            </ScrollView>
-        </PurpleGradientContainer>
+                    : null
+            }
+        </>
     );
 }
 
@@ -138,3 +201,12 @@ const styles = StyleSheet.create({
         marginVertical: 30,
     },
 });
+
+
+const mapStateToProps = (state) => {
+    return {
+        registerInfo: state.registerInfo,
+    }
+}
+
+export default connect(mapStateToProps, undefined)(Register);

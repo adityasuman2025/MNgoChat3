@@ -41,7 +41,7 @@ function Login({
         if (Object.keys(loginInfo).length > 0) {
             const { statusCode, msg, data } = loginInfo;
             if (statusCode === 200) {
-                displaySnackBar("success", "Successfully logged in");
+                displaySnackBar("success", msg);
             } else {
                 displaySnackBar("error", msg);
             }
