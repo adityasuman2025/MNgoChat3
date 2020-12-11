@@ -2,15 +2,15 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Image, StatusBar } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {
-    GRADIENT_PURPLE_LIGHT,
-    GRADIENT_PURPLE_DARK,
-    GRADIENT_GREY_LIGHT,
-    GRADIENT_GREY_DARK,
-} from "../constants";
 import { getDecryptedAsyncStorageValue } from "../utils";
 
 import LoaderDark from "../components/LoaderDark";
+import PurpleGradientContainer from "../components/PurpleGradientContainer";
+
+import {
+    GRADIENT_GREY_LIGHT,
+    GRADIENT_GREY_DARK,
+} from "../constants";
 
 export default function Landing({ navigation }) {
     //componentDidMount
@@ -35,12 +35,7 @@ export default function Landing({ navigation }) {
 
     //component rendering
     return (
-        <LinearGradient
-            start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }}
-            locations={[0, 0.5]}
-            colors={[GRADIENT_PURPLE_LIGHT, GRADIENT_PURPLE_DARK]}
-            style={styles.root}
-        >
+        <PurpleGradientContainer>
             <StatusBar barStyle="dark-content" hidden={true} backgroundColor="#35176d" translucent={true} />
             <LinearGradient
                 start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }}
@@ -73,15 +68,11 @@ export default function Landing({ navigation }) {
             >
                 <LoaderDark />
             </LinearGradient>
-        </LinearGradient>
+        </PurpleGradientContainer>
     );
 }
 
 const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-    },
-
     container: {
         position: "absolute",
         top: -50,

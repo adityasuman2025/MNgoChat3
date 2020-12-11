@@ -9,22 +9,21 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
+import ButtonLight from "../components/ButtonLight";
+import SignInUpButton from "../components/SignInUpButton";
+import SnackBar from "../components/SnackBar";
+import PurpleGradientContainer from "../components/PurpleGradientContainer";
+
 import {
-    GRADIENT_PURPLE_LIGHT,
-    GRADIENT_PURPLE_DARK,
+    loginUserAction
+} from "../actions/index";
+
+import {
     DARK_PURPLE,
     DARK_GREY,
     PROJECT_NAME,
 } from "../constants";
 import { globalStyles } from '../styles/globalStyles';
-
-import ButtonLight from "../components/ButtonLight";
-import SignInUpButton from "../components/SignInUpButton";
-import SnackBar from "../components/SnackBar";
-
-import {
-    loginUserAction
-} from "../actions/index";
 
 function Login({
     loginInfo,
@@ -82,12 +81,7 @@ function Login({
     //component rendering
     return (
         <>
-            <LinearGradient
-                start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }}
-                locations={[0, 0.5]}
-                colors={[GRADIENT_PURPLE_LIGHT, GRADIENT_PURPLE_DARK]}
-                style={globalStyles.root}
-            >
+            <PurpleGradientContainer>
                 <View style={styles.container}>
                     <Image source={require("../images/logo.png")} style={globalStyles.logoImg} />
                     <Text style={globalStyles.logoTitle}>{PROJECT_NAME}</Text>
@@ -123,7 +117,7 @@ function Login({
                     buttonText="Signup"
                     onPress={handleSignupPressed}
                 />
-            </LinearGradient>
+            </PurpleGradientContainer>
 
             {
                 snackBarVisible ?
