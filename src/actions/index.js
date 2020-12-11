@@ -4,7 +4,6 @@ import {
 
 export const loginUserAction = (username, password) => async (dispatch) => {
     try {
-        //sending rqst to api
         const response = await verifyUser(username, password);
 
         dispatch({ type: 'LOGIN_USER', payload: response });

@@ -41,7 +41,6 @@ function Login({
 
     useEffect(() => {
         if (Object.keys(loginInfo).length > 0) {
-            console.log("loginInfo", loginInfo);
             const { statusCode, msg, data } = loginInfo;
             if (statusCode === 200) {
                 displaySnackBar("success", "Successfully logged in");
@@ -54,10 +53,12 @@ function Login({
 
     //function to handle when login btn is pressed
     function handleLoginPress() {
-        console.log("login pressed");
-        setIsLoading(true);
-
-        dispatch && dispatch(loginUserAction(username, password));
+        if (username !== "" && password !== "") {
+            setIsLoading(true);
+            dispatch && dispatch(loginUserAction(username, password));
+        } else {
+            displaySnackBar("error", "Please fill all the input fields");
+        }
     }
 
     //function to handle when signup btn is pressed
