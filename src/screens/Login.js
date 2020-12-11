@@ -17,6 +17,7 @@ import {
     resetLoginInfoAction,
     loginUserAction
 } from "../actions/index";
+import { makeEncryptedAsyncStorage } from "../utils";
 
 import {
     DARK_PURPLE,
@@ -50,15 +51,31 @@ function Login({
 
     //when any change in reducer state variable "loginInfo" takes place
     useEffect(() => {
-        if (Object.keys(loginInfo).length > 0) {
-            const { statusCode, msg, data } = loginInfo;
-            if (statusCode === 200) {
-                displaySnackBar("success", msg);
-            } else {
-                displaySnackBar("error", msg);
+        (async () => {
+            if (Object.keys(loginInfo).length > 0) {
+                const { statusCode, msg, data, token } = loginInfo;
+                if (statusCode === 200) {
+                    if (data && token) {
+                        //creating cookie of the user details
+                        const loggedUserId = await makeEncryptedAsyncStorage("loggedUserId", data.id);
+                        const loggedUserName = await makeEncryptedAsyncStorage("loggedUserName", data.name);
+                        const loggedUserUsername = await makeEncryptedAsyncStorage("loggedUserUsername", data.username);
+                        const loggedUserEmail = await makeEncryptedAsyncStorage("loggedUserEmail", data.email);
+                        const loggedUserToken = await makeEncryptedAsyncStorage("loggedUserToken", token);
+                        if (loggedUserId && loggedUserName && loggedUserUsername && loggedUserEmail && loggedUserToken) {
+                            displaySnackBar("success", msg);
+                        } else {
+                            displaySnackBar("error", "Seomthing went wrong");
+                        }
+                    } else {
+                        displaySnackBar("error", "Seomthing went wrong");
+                    }
+                } else {
+                    displaySnackBar("error", msg);
+                }
+                setIsLoading(false);
             }
-            setIsLoading(false);
-        }
+        })();
     }, [loginInfo]);
 
     //function to handle when login btn is pressed

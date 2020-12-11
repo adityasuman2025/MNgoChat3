@@ -20,7 +20,7 @@ export async function getDecryptedAsyncStorageValue(name) {
 };
 
 //function to set async storage after encrypting the value
-export async function makeEncryptedCookie(key, value) {
+export async function makeEncryptedAsyncStorage(key, value) {
     try {
         const encryptedValue = CryptoJS.AES.encrypt(value, ENCRYPTION_KEY).toString();
         await AsyncStorage.setItem(key, encryptedValue);

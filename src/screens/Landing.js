@@ -6,10 +6,10 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { getDecryptedAsyncStorageValue } from "../utils";
-
 import LoaderDark from "../components/LoaderDark";
 import PurpleGradientContainer from "../components/PurpleGradientContainer";
+
+import { getDecryptedAsyncStorageValue } from "../utils";
 
 import {
     GRADIENT_GREY_LIGHT,

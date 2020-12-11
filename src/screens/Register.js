@@ -32,7 +32,6 @@ import { globalStyles } from '../styles/globalStyles';
 
 function Register({
     registerInfo,
-    navigation,
     dispatch,
 }) {
     const [username, setUsername] = useState("");
@@ -63,7 +62,7 @@ function Register({
         if (Object.keys(registerInfo).length > 0) {
             const { statusCode, msg, data } = registerInfo;
             if (statusCode === 200) {
-                displaySnackBar("success", msg);
+                displaySnackBar("success", msg + ". Please login to continue");
             } else {
                 displaySnackBar("error", msg);
             }
