@@ -1,29 +1,26 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+import { Provider } from 'react-redux';
 import {
     StyleSheet,
-    TouchableWithoutFeedback,
     View,
     StatusBar,
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
+import store from './src/store';
 import RootStack from './src/navigation/RootStack';
 
 function App() {
     return (
-        <TouchableWithoutFeedback onPress={() => {
-            console.log("yo")
-            //to remove the keyboard from screen when anywhere instead of textInput field is pressed  
-            Keyboard.dismiss();
-        }}>
+        <Provider store={store}>
             <View style={styles.container}>
                 <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#35176d" translucent={true} />
                 <NavigationContainer>
                     <RootStack />
                 </NavigationContainer>
             </View>
-        </TouchableWithoutFeedback>
+        </Provider>
     );
 };
 

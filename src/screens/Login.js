@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
+import { connect } from 'react-redux';
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TextInput
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {
@@ -15,7 +22,15 @@ import ButtonLight from "../components/ButtonLight";
 import SignInUpButton from "../components/SignInUpButton";
 import SnackBar from "../components/SnackBar";
 
-export default function Login({ navigation }) {
+import {
+    loginUserAction
+} from "../actions/index";
+
+function Login({
+    loginInfo,
+    navigation,
+    dispatch,
+}) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -24,11 +39,25 @@ export default function Login({ navigation }) {
     const [snackBarText, setSnackBarText] = useState("");
     const [snackBarType, setSnackBarType] = useState("");
 
+    useEffect(() => {
+        if (Object.keys(loginInfo).length > 0) {
+            console.log("loginInfo", loginInfo);
+            const { statusCode, msg, data } = loginInfo;
+            if (statusCode === 200) {
+                displaySnackBar("success", "Successfully logged in");
+            } else {
+                displaySnackBar("error", msg);
+            }
+            setIsLoading(false);
+        }
+    }, [loginInfo]);
+
     //function to handle when login btn is pressed
     function handleLoginPress() {
         console.log("login pressed");
-        displaySnackBar("error", "ot bro")
         setIsLoading(true);
+
+        dispatch && dispatch(loginUserAction(username, password));
     }
 
     //function to handle when signup btn is pressed
@@ -117,3 +146,12 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
 });
+
+
+const mapStateToProps = (state) => {
+    return {
+        loginInfo: state.loginInfo,
+    }
+}
+
+export default connect(mapStateToProps, undefined)(Login);
